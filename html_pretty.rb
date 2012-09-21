@@ -23,9 +23,9 @@ module HtmlPretty
   # Really bad assumption heavy tidy...
   # Self rolled because other versions have weird errors
   def self.fake_tidy(html)
-    html = html.gsub(/(^ *\n|^ +)/, '') # kill blank lines
-    html = html.gsub(/^[ \t]+/, '')     # kill opening whitespace
-    html = html.gsub(/[ \t]+$/, '')     # kill closing whitespace
+    html = html.gsub(/\n+/, "\n")       # kill blank lines
+    html = html.gsub(/^\s+/, '')        # kill opening whitespace
+    html = html.gsub(/\s+$/, '')        # kill closing whitespace
     html = html.gsub(/[ \t]+/, ' ')     # collapse all whitespace
     html = html.gsub(/<[ \t]+/, '<')    # remove whitespace between brackets
     html = html.gsub(/[ \t]+>/, '>')    # remove whitespace between brackets
