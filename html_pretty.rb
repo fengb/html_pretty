@@ -43,6 +43,6 @@ module HtmlPretty
         indent += 1
         val = "  " * (indent - 1) + line
       end
-    end
+    end.join
   end
 end
