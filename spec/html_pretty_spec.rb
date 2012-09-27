@@ -8,7 +8,7 @@ def parse_describe(name, hash)
     hash.each do |child_name, child_hash|
       if child_hash.has_key?('in')
         it child_name do
-          output = HtmlPretty.fake_tidy(child_hash['in'])
+          output = HtmlPretty.run(child_hash['in'])
           output.should == child_hash['out']
         end
       else
