@@ -9,7 +9,7 @@ def parse_describe(name, hash)
       if child_hash.has_key?('in')
         it child_name do
           output = HtmlPretty.fake_tidy(child_hash['in'])
-          output.should == child_hash['out'].sub(/\n$/, '')
+          output.should == child_hash['out']
         end
       else
         parse_describe(child_name, child_hash)
