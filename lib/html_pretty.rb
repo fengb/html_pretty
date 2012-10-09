@@ -1,4 +1,6 @@
 module HtmlPretty
+  VERSION = '0.0.1'
+
   # Really bad assumption heavy tidy...
   # Self rolled because other versions have weird errors
   class << self
