@@ -4,4 +4,7 @@
 require 'html_pretty'
 
 
-puts HtmlPretty.run(IO.read(ARGV[0]))
+input = ARGV[0] ? File.open(ARGV[0]) : $stdin
+output = ARGV[1] ? File.open(ARGV[1], 'w') : $stdout
+
+output.write HtmlPretty.run(input.read)
