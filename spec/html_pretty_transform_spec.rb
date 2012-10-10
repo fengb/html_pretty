@@ -3,8 +3,8 @@ require 'html_pretty'
 require 'yaml'
 data = YAML.load_file(__FILE__.sub(/rb$/, 'yaml'))
 
-def describe_from_hash(name, hash)
-  describe name do
+def context_from_hash(name, hash)
+  context name do
     hash.each do |child_name, child_hash|
       if child_hash.has_key?('in')
         it child_name do
@@ -12,10 +12,13 @@ def describe_from_hash(name, hash)
           output.should == child_hash['out']
         end
       else
-        describe_from_hash(child_name, child_hash)
+        context_from_hash(child_name, child_hash)
       end
     end
   end
 end
 
-describe_from_hash(HtmlPretty, data)
+
+describe HtmlPretty do
+  context_from_hash('transform', data)
+end
