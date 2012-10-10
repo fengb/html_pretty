@@ -16,16 +16,17 @@ module HtmlPretty
       html.map do |line|
         if line.start_with?('<!') || line =~ /<html.*ie/
           line                            # Comments should have no alignment
-        elsif line.start_with?('</')
-          indent -= 1
-          "  " * indent + line
-        elsif line.end_with?("/>\n") ||   # <self-close />
-              line =~ /<\/[^>]*>/ ||      # <tail>end</tail>
-              line !~ /</                 # simple line
-          "  " * indent + line
         else
-          indent += 1
-          val = "  " * (indent - 1) + line
+          open_tags = line.scan(/<[^\/>]*>/).size
+          close_tags = line.scan(/<\/[^>]*>/).size
+          if open_tags > close_tags
+            val = "  " * indent + line
+            indent += open_tags - close_tags
+            val
+          else
+            indent += open_tags - close_tags
+            "  " * indent + line
+          end
         end
       end.join
     end

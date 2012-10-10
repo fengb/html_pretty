@@ -1,5 +1,5 @@
 single tags:
-  parses simplest html block:
+  converts simplest html block:
     in:  <html></html>
     out: <html></html>
 
@@ -39,7 +39,7 @@ single tags:
       </html>
 
   collapses spaces between tags:
-    # HTML text nodes have meanings so we can't just quash them.
+    # HTML text nodes have meanings so we shouldn't just quash them.
     in:  <html> 	  </html>
     out: <html> </html>
 
@@ -56,6 +56,19 @@ nested tags:
         </hi>
       </html>
 
+  indent with text on either side:
+    # HTML text nodes have meanings so we can't just quash them.
+    in: |
+      <html>
+      <spam>abc
+      123</spam>
+      </html>
+    out: |
+      <html>
+        <spam>abc
+        123</spam>
+      </html>
+
   indent with multiple opening tags:
     in: |
       <html>
@@ -69,6 +82,19 @@ nested tags:
       <html>
         <hi>
           <bye>
+          </bye>
+        </hi>
+      </html>
+
+  indent with multiple opening tags on one line:
+    in: |
+      <html><hi><bye>
+      </bye>
+      </hi>
+      </html>
+
+    out: |
+      <html><hi><bye>
           </bye>
         </hi>
       </html>
