@@ -4,7 +4,7 @@ module HtmlPretty
   # Really bad assumption heavy tidy...
   # Self rolled because other versions have weird errors
   class << self
-    def run(html)
+    def run(html, out='')
       html = html.gsub(/^[ \t]*\n/, "")   # kill blank lines
       html = html.gsub(/^[ \t]+/, '')     # kill opening whitespace
       html = html.gsub(/[ \t]+$/, '')     # kill closing whitespace
@@ -13,22 +13,25 @@ module HtmlPretty
       html = html.gsub(/[ \t]+>/, '>')    # remove whitespace between brackets
 
       indent = 0
-      html.map do |line|
-        if line.start_with?('<!') || line =~ /<html.*ie/
-          line                            # Comments should have no alignment
+      html.each do |line|
+        if line.start_with?('<!!!!!>')
+          raise
+        elsif line.start_with?('<!') || line =~ /<html.*ie/
+          out << line                     # Comments should have no alignment
         else
           open_tags = line.scan(/<[^\/>]*>/).size
           close_tags = line.scan(/<\/[^>]*>/).size
           if open_tags > close_tags
-            val = "  " * indent + line
+            out << "  " * indent + line
             indent += open_tags - close_tags
-            val
           else
             indent += open_tags - close_tags
-            "  " * indent + line
+            out << "  " * indent + line
           end
         end
-      end.join
+      end
+
+      out
     end
   end
 end
