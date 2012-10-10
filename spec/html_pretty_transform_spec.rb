@@ -3,7 +3,7 @@ require 'html_pretty'
 require 'yaml'
 data = YAML.load_file(__FILE__.sub(/rb$/, 'yaml'))
 
-def parse_describe(name, hash)
+def describe_from_hash(name, hash)
   describe name do
     hash.each do |child_name, child_hash|
       if child_hash.has_key?('in')
@@ -12,10 +12,10 @@ def parse_describe(name, hash)
           output.should == child_hash['out']
         end
       else
-        parse_describe(child_name, child_hash)
+        describe_from_hash(child_name, child_hash)
       end
     end
   end
 end
 
-parse_describe(HtmlPretty, data)
+describe_from_hash(HtmlPretty, data)
