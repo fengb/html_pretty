@@ -17,5 +17,6 @@ Gem::Specification.new do |gem|
 
   gem.add_development_dependency('rspec', [">= 2.0.0"])
 
-  gem.files = Dir["lib/**/*"] + %w{LICENSE README.md}
+  gem.files = Dir["{bin,lib}/**/*"] + %w{LICENSE Rakefile README.md}
+  gem.executables = Dir["bin/**"].map { |f| File.basename(f) }
 end
