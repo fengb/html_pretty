@@ -111,6 +111,16 @@ nested tags:
         <bye />
       </html>
 
+  indents hrefs:
+    in: |
+      <a href='http://www.google.com'>
+      something
+      </a>
+    out: |
+      <a href='http://www.google.com'>
+        something
+      </a>
+
 special:
   do not indent from DOCTYPE:
     in: |
@@ -121,6 +131,7 @@ special:
       <!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN'
       'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
       <html></html>
+
   indents correctly even after descender fails:
     in: |
       <html>

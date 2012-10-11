@@ -19,7 +19,7 @@ module HtmlPretty
         elsif line.start_with?('<!') || line =~ /<html.*ie/
           out << line                     # Comments should have no alignment
         else
-          open_tags = line.scan(/<[^\/>]*>/).size
+          open_tags = line.scan(/<[^\/][^>]*>/).select{|d| d !~ /\/>$/}.size
           close_tags = line.scan(/<\/[^>]*>/).size
           if open_tags > close_tags
             out << "  " * indent + line
