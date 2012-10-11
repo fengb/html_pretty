@@ -24,8 +24,10 @@ module HtmlPretty
           if open_tags > close_tags
             out << "  " * indent + line
             indent += open_tags - close_tags
+            indent = 0 if indent < 0
           else
             indent += open_tags - close_tags
+            indent = 0 if indent < 0
             out << "  " * indent + line
           end
         end
