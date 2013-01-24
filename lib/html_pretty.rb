@@ -11,7 +11,7 @@ module HtmlPretty
       if blob.start_with?('<!--!!!-->')
         raise
       elsif blob =~ SPECIAL
-        out << blob << "\n"                 # Comments should have no adjustments
+        out << "  " * indent << blob << "\n"
       else
         blob = blob.gsub(/^[ \t]*\n/, "")   # kill blank lines
         blob = blob.gsub(/^[ \t]+/, '')     # kill opening whitespace
