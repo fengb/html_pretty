@@ -1,6 +1,7 @@
-module HtmlPretty
-  VERSION = '0.0.1'
+require 'html_pretty/version'
 
+
+module HtmlPretty
   SPECIAL = /(<!--.*?-->|<script.*?\/script>|<style.*?\/style>)/m
 
   # Really bad assumption heavy tidy...
