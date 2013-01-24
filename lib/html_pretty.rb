@@ -4,13 +4,14 @@ module HtmlPretty
   # Really bad assumption heavy tidy...
   # Self rolled because other versions have weird errors
   class << self
+    SPECIAL = /(<!--.*?-->)/m
     def run(html, out='')
       indent = 0
-      html.split(/(<!--.*?-->)/).each do |blob|
+      html.split(SPECIAL).each do |blob|
         if blob.start_with?('<!--!!!-->')
           raise
         elsif blob.start_with?('<!--')
-          out << blob                     # Comments should have no adjustments
+          out << blob << "\n"                 # Comments should have no adjustments
         else
           blob = blob.gsub(/^[ \t]*\n/, "")   # kill blank lines
           blob = blob.gsub(/^[ \t]+/, '')     # kill opening whitespace

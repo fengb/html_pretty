@@ -132,12 +132,12 @@ special:
       'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
       <html></html>
 
-  do not affect comments:
+  does not affect comments:
     in: |
       <!-- comment
             <html> -->
-      <html>
-      </html>
+        <html>
+        </html>
     out: |
       <!-- comment
             <html> -->
