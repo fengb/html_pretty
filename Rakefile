@@ -1,25 +1,46 @@
-require 'rexml/document'
 
 
-task :compare do
-  dstdir = 'compare'
-  srcfile = "#{dstdir}/_orig.html"
-  srcstr = IO.read(srcfile)
-
-  `ruby -Ilib bin/html_pretty #{srcfile} >#{dstdir}/html_pretty.html`
-  `htmlbeautifier <#{srcfile} >#{dstdir}/htmlbeautifier.html`
-  `tidy -i -q #{srcfile} >#{dstdir}/tidy.html 2>&-`
-
-  begin
-    require 'nokogiri'
-    doc = Nokogiri::XML(srcstr, &:noblanks)
-    File.open("#{dstdir}/nokogiri.html", 'w'){|f| f.write doc.to_xhtml(:indent => 2)}
-  rescue LoadError => e
-    $stderr.puts '-- nokogiri not found -- skipping'
+namespace :output do
+  def work_dir
+    'compare'
   end
 
-  doc = REXML::Document.new(srcstr)
-  File.open("#{dstdir}/rexml.html", 'w'){|f| doc.write f, 2}
-end
+  def src_file
+    "#{work_dir}/_orig.html"
+  end
 
-task :default => :compare
+  def src_str
+    IO.read(src_file)
+  end
+
+  def dst_file(t)
+    "#{work_dir}/#{t.name.rpartition(':').last}.html"
+  end
+
+  task :html_pretty do |t|
+    sh "ruby -Ilib bin/html_pretty #{src_file} >#{dst_file(t)}"
+  end
+
+  task :htmlbeautifier do |t|
+    sh "htmlbeautifier <#{src_file} >#{dst_file(t)}"
+  end
+
+  task :tidy do |t|
+    sh "tidy -i -q #{src_file} >#{dst_file(t)} 2>&1"
+  end
+
+  task :rexml do |t|
+    require 'rexml/document'
+    doc = REXML::Document.new(src_str)
+    File.open(dst_file(t), 'w'){|f| doc.write f, 2}
+  end
+
+  task :nokogiri do |t|
+    require 'nokogiri'
+    doc = Nokogiri::XML(src_str, &:noblanks)
+    File.open(dst_file(t), 'w'){|f| f.write doc.to_xhtml(:indent => 2)}
+  end
+end
+task :output => 'output:html_pretty'
+
+task :default => :output
