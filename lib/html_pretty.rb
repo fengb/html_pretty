@@ -13,7 +13,7 @@ module HtmlPretty
       html = html.gsub(/[ \t]+>/, '>')    # remove whitespace between brackets
 
       indent = 0
-      html.each do |line|
+      html.each_line do |line|
         if line.start_with?('<!!!!!>')
           raise
         elsif line.start_with?('<!') || line =~ /<html.*ie/
