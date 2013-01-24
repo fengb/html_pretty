@@ -2,7 +2,7 @@ require 'html_pretty/version'
 
 
 module HtmlPretty
-  SPECIAL = /(<!--.*?-->|<script.*?\/script>|<style.*?\/style>)/m
+  SPECIAL = /(<!DOCTYPE.*?>|<!--.*?-->|<script.*?\/script>|<style.*?\/style>)/m
 
   # Really bad assumption heavy tidy...
   # Self rolled because other versions have weird errors

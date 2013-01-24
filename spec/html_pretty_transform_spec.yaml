@@ -129,7 +129,15 @@ special:
           <html></html>
     out: |
       <!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN'
-      'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+        'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+      <html></html>
+
+  do not indent from HTML5:
+    in: |
+      <!DOCTYPE html>
+          <html></html>
+    out: |
+      <!DOCTYPE html>
       <html></html>
 
   does not affect comments:
