@@ -144,6 +144,42 @@ special:
       <html>
       </html>
 
+  does not affect script:
+    in: |
+      <script type='text/javascript'>
+        if(0 == 1) {
+          raise 'End of the world!'
+        }
+      </script>
+        <html>
+        </html>
+    out: |
+      <script type='text/javascript'>
+        if(0 == 1) {
+          raise 'End of the world!'
+        }
+      </script>
+      <html>
+      </html>
+
+  does not affect style:
+    in: |
+      <style type='text/css'>
+        html {
+          position: absolute;
+        }
+      </style>
+        <html>
+        </html>
+    out: |
+      <style type='text/css'>
+        html {
+          position: absolute;
+        }
+      </style>
+      <html>
+      </html>
+
 malformed:
   indents correctly even after descender fails:
     in: |
