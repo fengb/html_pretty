@@ -9,7 +9,7 @@ module HtmlPretty
       html.split(/(<!--.*?-->)/).each do |blob|
         if blob.start_with?('<!--!!!-->')
           raise
-        elsif blob.start_with?('<!--') || blob =~ /<html.*ie/
+        elsif blob.start_with?('<!--')
           out << blob                     # Comments should have no adjustments
         else
           blob = blob.gsub(/^[ \t]*\n/, "")   # kill blank lines
