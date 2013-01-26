@@ -1,6 +1,3 @@
-lib = File.expand_path('../lib/', __FILE__)
-$:.unshift lib unless $:.include?(lib)
-
 require 'html_pretty/version'
 
 Gem::Specification.new do |gem|
