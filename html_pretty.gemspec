@@ -1,4 +1,4 @@
-require 'html_pretty/version'
+require File.expand_path('../lib/html_pretty/version', __FILE__)
 
 Gem::Specification.new do |gem|
   gem.name    = 'html_pretty'
@@ -12,7 +12,7 @@ Gem::Specification.new do |gem|
   gem.email    = 'benjamin.feng@gmail.com'
   gem.homepage = 'http://github.com/fengb/html_pretty'
 
-  gem.add_development_dependency('rspec', [">= 2.0.0"])
+  gem.add_development_dependency 'rspec', ">= 2.0.0"
 
   gem.files = Dir["{bin,lib}/**/*"] + %w{LICENSE Rakefile README.md}
   gem.executables = Dir["bin/**"].map { |f| File.basename(f) }

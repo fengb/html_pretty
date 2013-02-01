@@ -1,4 +1,4 @@
-
+require 'bundler/gem_tasks'
 
 namespace :output do
   def work_dir
