@@ -25,10 +25,6 @@ namespace :output do
     sh "htmlbeautifier <#{src_file} >#{dst_file(t)}"
   end
 
-  task :tidy do |t|
-    sh "tidy -i -q #{src_file} >#{dst_file(t)} 2>&1"
-  end
-
   task :rexml do |t|
     require 'rexml/document'
     doc = REXML::Document.new(src_str)

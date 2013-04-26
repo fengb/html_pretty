@@ -12,7 +12,10 @@ Gem::Specification.new do |gem|
   gem.email    = 'benjamin.feng@gmail.com'
   gem.homepage = 'http://github.com/fengb/html_pretty'
 
-  gem.add_development_dependency 'rspec', ">= 2.0.0"
+  gem.add_development_dependency 'rspec',    ">= 2.0.0"
+  %w[htmlbeautifier nokogiri].each do |rival|
+    gem.add_development_dependency rival
+  end
 
   gem.files = Dir["{bin,lib}/**/*"] + %w{LICENSE Rakefile README.md}
   gem.executables = Dir["bin/**"].map { |f| File.basename(f) }
