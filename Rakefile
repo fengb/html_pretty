@@ -1,4 +1,4 @@
-require 'bundler/gem_tasks'
+require 'rspec/core/rake_task'
 
 namespace :output do
   def work_dir
@@ -39,4 +39,8 @@ namespace :output do
 end
 task :output => 'output:html_pretty'
 
-task :default => :output
+RSpec::Core::RakeTask.new(:spec) do |rt|
+  rt.fail_on_error = false
+end
+
+task :default => :spec
