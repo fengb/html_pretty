@@ -18,11 +18,14 @@ namespace :output do
   end
 
   task :html_pretty do |t|
-    sh "ruby -Ilib bin/html_pretty #{src_file} >#{dst_file(t)}"
+    require 'html_pretty'
+    str = HtmlPretty.run(src_str)
+    File.open(dst_file(t), 'w'){|f| f.write str}
   end
 
   task :htmlbeautifier do |t|
-    sh "htmlbeautifier <#{src_file} >#{dst_file(t)}"
+    require 'htmlbeautifier'
+    File.open(dst_file(t), "w"){|f| HtmlBeautifier::Beautifier.new(f).scan(src_str)}
   end
 
   task :rexml do |t|
