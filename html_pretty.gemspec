@@ -1,4 +1,5 @@
-require File.expand_path('../lib/html_pretty/version', __FILE__)
+$:.push File.expand_path("../lib", __FILE__)
+require "html_pretty/version"
 
 Gem::Specification.new do |gem|
   gem.name    = 'html_pretty'
