@@ -17,30 +17,33 @@ namespace :output do
     "#{work_dir}/#{t.name.rpartition(':').last}.html"
   end
 
+  def process(task, &block)
+    File.open(dst_file(task), 'w') do |outfile|
+      block.call(outfile, src_str)
+    end
+  end
+
   task :html_pretty do |t|
     require 'html_pretty'
-    str = HtmlPretty.run(src_str)
-    File.open(dst_file(t), 'w'){|f| f.write str}
+    process(t) {|outfile, instr| outfile.write HtmlPretty.run(src_str) }
   end
 
   task :htmlbeautifier do |t|
     require 'htmlbeautifier'
-    File.open(dst_file(t), "w"){|f| HtmlBeautifier::Beautifier.new(f).scan(src_str)}
+    process(t) {|outfile, instr| HtmlBeautifier::Beautifier.new(outfile).scan(instr)}
   end
 
   task :rexml do |t|
     require 'rexml/document'
-    doc = REXML::Document.new(src_str)
-    File.open(dst_file(t), 'w'){|f| doc.write f, 2}
+    process(t) {|outfile, instr| REXML::Document.new(instr).write(outfile, 2)}
   end
 
   task :nokogiri do |t|
     require 'nokogiri'
-    doc = Nokogiri::XML(src_str, &:noblanks)
-    File.open(dst_file(t), 'w'){|f| f.write doc.to_xhtml(:indent => 2)}
+    process(t) {|outfile, instr| outfile.write Nokogiri::XML(instr, &:noblanks).to_xhtml(indent: 2)}
   end
 end
-task :output => 'output:html_pretty'
+task :output => %w[output:html_pretty output:htmlbeautifier output:rexml output:nokogiri]
 
 RSpec::Core::RakeTask.new(:spec) do |rt|
   rt.fail_on_error = false
