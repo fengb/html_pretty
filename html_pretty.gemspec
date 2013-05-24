@@ -12,6 +12,7 @@ Gem::Specification.new do |gem|
   gem.homepage = 'http://github.com/fengb/html_pretty'
 
   gem.add_development_dependency 'rspec',    ">= 2.0.0"
+  gem.add_development_dependency 'cucumber', ">= 1.3.0"
   %w[htmlbeautifier nokogiri].each do |rival|
     gem.add_development_dependency rival
   end
