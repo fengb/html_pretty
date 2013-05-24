@@ -21,12 +21,12 @@ namespace :compare do
     HtmlBeautifier::Beautifier.new(outfile).scan(instr)
   end
 
-  comptask :rexml, require: 'rexml/document' do |outfile, instr|
+  comptask :rexml, :require => 'rexml/document' do |outfile, instr|
     REXML::Document.new(instr).write(outfile, 2)
   end
 
   comptask :nokogiri do |outfile, instr|
-    outfile.write Nokogiri::XML(instr, &:noblanks).to_xhtml(indent: 2)
+    outfile.write Nokogiri::XML(instr, &:noblanks).to_xhtml(:indent => 2)
   end
 end
 desc "Output all comparisons"
