@@ -1,5 +1,3 @@
-require 'rspec/core/rake_task'
-
 namespace :compare do
   def src_str
     @src_str ||= IO.read("compare/_orig.html")
@@ -34,8 +32,14 @@ end
 desc "Output all comparisons"
 task :compare => %w[compare:html_pretty compare:htmlbeautifier compare:rexml compare:nokogiri]
 
+require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec) do |rt|
   rt.fail_on_error = false
 end
 
-task :default => :spec
+require 'cucumber/rake/task'
+Cucumber::Rake::Task.new(:features) do |t|
+  t.cucumber_opts = "features --format progress"
+end
+
+task :default => [:spec, :features]
