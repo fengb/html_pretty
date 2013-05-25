@@ -16,7 +16,7 @@ module HtmlPretty
       else
         # Remove all newlines within a tag definition
         # Example: '<a\nb=1\nc=2>' => '<a b=1 c=2>'
-        blob = blob.split(/(<.*?>)/).map do |blub|
+        blob = blob.split(/(<.*?>)/m).map do |blub|
                  if blub.start_with?('<')
                    blub.gsub(/\n/, ' ')
                  else
