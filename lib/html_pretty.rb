@@ -14,7 +14,17 @@ module HtmlPretty
       elsif blob =~ SPECIAL
         out << "  " * indent << blob << "\n"
       else
-        blob = blob.gsub(/^[ \t]*\n/, "")   # kill blank lines
+        # Remove all newlines within a tag definition
+        # Example: '<a\nb=1\nc=2>' => '<a b=1 c=2>'
+        blob = blob.split(/(<.*?>)/).map do |blub|
+                 if blub.start_with?('<')
+                   blub.gsub(/\n/, ' ')
+                 else
+                   blub
+                 end
+               end.join
+
+        blob = blob.gsub(/^[ \t]*\n/, '')   # kill blank lines
         blob = blob.gsub(/^[ \t]+/, '')     # kill opening whitespace
         blob = blob.gsub(/[ \t]+$/, '')     # kill closing whitespace
         blob = blob.gsub(/[ \t]+/, ' ')     # collapse all whitespace

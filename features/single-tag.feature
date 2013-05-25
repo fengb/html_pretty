@@ -43,6 +43,20 @@ Feature: single tags
             <html foo='bar' tony='hawk'></html>
             """
 
+  Scenario: collapses newlines within tags
+       When the input is:
+            """
+            <html
+              id='something'
+              ></html
+
+            >
+            """
+       Then the output is:
+            """
+            <html id='something'></html>
+            """
+
   Scenario: quashes whitespace at the tag extremes
        When the input is:
             """
